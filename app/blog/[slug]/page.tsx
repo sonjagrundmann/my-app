@@ -1,9 +1,19 @@
+async function wait() {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+}
+
 export default async function BlogPostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  await wait();
+
+  if (slug === "not-found") {
+    throw new Error("Blogpost konnte nicht geladen werden");
+  }
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-pink-100 p-8">
@@ -14,7 +24,7 @@ export default async function BlogPostPage({
           Blog Post
         </h1>
 
-        <p className="mt-4 text-lg text-pink-500">Du bist auf dem Blogpost:</p>
+        <p className="mt-4 text-pink-500">Aktueller Slug:</p>
 
         <p className="mt-2 text-2xl font-bold text-fuchsia-600">{slug}</p>
       </div>
